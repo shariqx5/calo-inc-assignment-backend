@@ -1,0 +1,37 @@
+services:
+  nest-backend:
+    container_name: nest-app
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    restart: unless-stopped
+    depends_on:
+      - redis
+    networks:
+      - calo-inc-app
+
+  redis:
+    container_name: redis-db
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+    networks:
+      - calo-inc-app
+
+volumes:
+  redis:
+    driver: local
+
+networks:
+  calo-inc-app:
+    driver: bridge
