@@ -69,6 +69,7 @@ $ npm install
 $ docker-compose build
 
 # Docker up - If port 3000 is already in use, then update the port in main.ts & run this command again.
+# To speed up testing, adjust the IMAGE_API_MAX_TIME_TAKEN value in docker-compose.yaml from 300 seconds to a lower value.
 $ docker-compose up
 ```
 
