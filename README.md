@@ -36,14 +36,21 @@ Job service designed for handling of jobs. This service contains three primary e
   * Scalability - We can quickly scale the number of workers based on traffic.
 * **Web sockets**
   * I am using WebSocket with **socket** protocol primarily with fallback on **long-polling** to handle the intermittent unstable internet issue.
-  * Why didn’t you go only with a **long polling strategy**? Due to the system’s **high throughput**, we decided not to rely on long polling as it’s **resource-intensive**. However, due to **unstable internet issues**, I can’t rely only on **web sockets**; therefore, I chose to use a combination of both to balance out the needs.
-  * I have implemented a retry strategy to make sure the delivery mechanism is at least once. For simplicity, retrying with a backoff strategy with a maximum of 10 attempts, but we can tweak it according to our needs.
+  * Why didn’t you go only with a **long polling strategy**? Due to the system’s **high throughput**, I decided not to rely on long polling as it’s **resource-intensive**. However, due to **unstable internet issues**, I can’t rely only on **web sockets**; therefore, I chose to use a combination of both to balance out the needs.
+  * I have implemented a retry strategy to make sure the delivery mechanism is at least once. For simplicity, retrying with a backoff strategy with a maximum of 10 attempts, but we can tweak it according to our needs. With sessions & database we can make web socket communication mechanism more robust.
 * **Queue for notification processing**
   * It offers all the benefits we mentioned above. Using our current task queue setup for notification processing works well, but considering Kafka as an alternative could provide enhanced scalability & real-time event processing which might be more beneficial to us as we scale.
 
 ## What I didn't focus on
 - I didn’t write tests, as my primary focus was to implement this POC.
-- I didn’t focus primarily on design principles so that you might see redundant code or some functions in the wrong class. I hope this is understandable.
+- I didn’t focus primarily on design principles so that you might see redundant code or classes having multiple responsiblities. I hope this is understandable.
+
+## Time spent on each section
+- Designing the system - 4-5 hours.
+- Implement the APIs - 3-4 hours.
+- Implementing the queue (BullMQ) & Consumer - 3-4
+- Implementing the websockets - 5-6 hours.
+- Implementing the frontend - 5-7 hours.
 
 ## Installation
 After cloning the repository, run the following command on your machine.
