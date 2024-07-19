@@ -32,18 +32,18 @@ Job service designed for handling of jobs. This service contains three primary e
 
 * **Queue for job processing**
   * Background Processing - We need to process the job asynchronously. 
-  * Robustness & Order - We can use built-in retry & prioritisation to make sure the job is always processed in an ordered manner.
+  * Robustness & Order - We can use built-in retry & prioritization to make sure the job is always processed in an ordered manner. Used it to implement a retry logic with fixed backoff strategy to make sure the job is processed at least once.
   * Scalability - We can quickly scale the number of workers based on traffic.
 * **Web sockets**
   * I am using WebSocket with **socket** protocol primarily with fallback on **long-polling** to handle the intermittent unstable internet issue.
   * Why didn’t you go only with a **long polling strategy**? Due to the system’s **high throughput**, I decided not to rely on long polling as it’s **resource-intensive**. However, due to **unstable internet issues**, I can’t rely only on **web sockets**; therefore, I chose to use a combination of both to balance out the needs.
-  * I have implemented a retry strategy to make sure the delivery mechanism is at least once. For simplicity, retrying with a backoff strategy with a maximum of 10 attempts, but we can tweak it according to our needs. With sessions & database we can make web socket communication mechanism more robust.
+  * I have implemented a retry strategy to make sure the delivery mechanism is at least once. For simplicity, retrying with a **backoff strategy** with a maximum of **10 attempts**, but we can tweak it according to our needs. With sessions & database we can make web socket communication mechanism more robust.
 * **Queue for notification processing**
   * It offers all the benefits we mentioned above. Using our current task queue setup for notification processing works well, but considering Kafka as an alternative could provide enhanced scalability & real-time event processing which might be more beneficial to us as we scale.
 
 ## What I didn't focus on
 - I didn’t write tests, as my primary focus was to implement this POC.
-- I didn’t focus primarily on design principles so that you might see redundant code or classes having multiple responsiblities. I hope this is understandable.
+- I didn’t focus primarily on design principles so you might see redundant code or classes having multiple responsiblities. I hope this is understandable.
 
 ## Time spent on each section
 - Designing the system - 4-5 hours.
