@@ -69,7 +69,7 @@ $ npm install
 $ docker-compose build
 
 # Docker up - If port 3000 is already in use, then update the port in main.ts & run this command again.
-$docker-compose up
+$ docker-compose up
 ```
 
 
