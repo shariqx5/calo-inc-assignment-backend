@@ -11,6 +11,7 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      IMAGE_API_MAX_TIME_TAKEN: 300 #In seconds
     restart: unless-stopped
     depends_on:
       - redis

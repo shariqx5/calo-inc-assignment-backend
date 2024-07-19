@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from "@nestjs/config"
 import { JobsService } from './jobs.service';
 import { JobsController } from './jobs.controller';
 import { FilesModule } from 'src/common/files/files.module';
@@ -39,7 +40,8 @@ import { NotifyUserJobResolved } from 'src/jobs/consumers/UserJobResolved.consum
     JobMapper, 
     JobConsumer, 
     SocketService,
-    NotifyUserJobResolved
+    NotifyUserJobResolved,
+    ConfigService
   ]
 })
 export class JobsModule {}

@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config"
 import { InjectQueue } from "@nestjs/bullmq"
 import { Queue } from "bullmq"
 import { FileService } from "src/common/files/files.service";
@@ -6,11 +7,16 @@ import { Job, JobStatus } from "./model/job";
 
 @Injectable()
 export class JobsService {
+  private readonly maximumTimeTakenByImageAPI: number
+
   constructor(
     @InjectQueue("jobs") private jobsQueue: Queue,
     @InjectQueue("notify-user-job-resolved") private notifyUserJobResolved: Queue,
     private readonly fileService: FileService,
-  ) {}
+    private readonly configService: ConfigService
+  ) {
+    this.maximumTimeTakenByImageAPI = this.configService.get<number>("IMAGE_API_MAX_TIME_TAKEN") || 300
+  }
 
   static readonly fileName = "jobs.txt"
 
@@ -44,7 +50,8 @@ export class JobsService {
 
   private async fetchFoodCategoryImagesFromUnsplash(): Promise<number> {
     // randomly selecting the time between 5seconds - 5 minutes with 5 step 
-    const timeTakenForFetchingImages = Math.round(Math.random() * 300/5) * 5 % 300
+    const timeTakenForFetchingImages = Math.round(
+      Math.random() * this.maximumTimeTakenByImageAPI/5) * 5 % this.maximumTimeTakenByImageAPI
     await this.simulateImageFetchingForGivenTime(timeTakenForFetchingImages)
     
     // select random status job result
