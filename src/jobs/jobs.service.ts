@@ -44,7 +44,7 @@ export class JobsService {
 
   private async fetchFoodCategoryImagesFromUnsplash(): Promise<number> {
     // randomly selecting the time between 5seconds - 5 minutes with 5 step 
-    const timeTakenForFetchingImages = Math.round(Math.random() * 100/5) * 5 % 100
+    const timeTakenForFetchingImages = Math.round(Math.random() * 300/5) * 5 % 300
     await this.simulateImageFetchingForGivenTime(timeTakenForFetchingImages)
     
     // select random status job result
